@@ -1,22 +1,21 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-
+import { Pressable, Text, TextInput, View } from "react-native";
+import { styles } from "./styles";
+ 
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Hola, Coder!</Text>
-      <Text>Esta es mi primera aplicación para dispositivos móviles</Text>
+      <Text>Lista de compras</Text>
+      <View style={styles.addButton}>
+        <TextInput placeholder="Escriba un texto... " style={styles.textInput} />
+        <Pressable style={styles.inputButton} onPress={() => console.log('Add')}>
+          <Text>AGREGAR</Text>
+        </Pressable>
+      </View>
+
       <StatusBar style="auto" />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
