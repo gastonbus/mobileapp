@@ -1,11 +1,8 @@
-import { StatusBar } from "expo-status-bar";
+// import { StatusBar } from "expo-status-bar";
 import {
 	FlatList,
-	Modal,
-	Pressable,
 	StyleSheet,
 	Text,
-	TextInput,
 	TouchableHighlight,
 	View,
 } from "react-native";
@@ -14,21 +11,8 @@ import { useState } from "react";
 import AddItem from "./src/components/AddItem";
 import ListItem from "./src/components/ListItem";
 import CustomModal from "./src/components/CustomModal";
+import { testList } from "./src/helpers/fakeData";
 
-const testList = [
-	{
-		id: 1,
-		name: "Fideos",
-	},
-	{
-		id: 2,
-		name: "Gaseosas",
-	},
-	{
-		id: 3,
-		name: "Manteca",
-	},
-];
 
 export default function App() {
 	const [inputText, setInputText] = useState("");
@@ -70,18 +54,20 @@ export default function App() {
 				<Text style={styles.headerText}>Lista de compras</Text>
 			</View>
 			<View style={styles.body}>
-				<AddItem
-					inputText={inputText}
-					setInputText={setInputText}
-					onAddItem={onAddItem}
-				/>
+				<View style={styles.addContainer}>
+					<AddItem
+						inputText={inputText}
+						setInputText={setInputText}
+						onAddItem={onAddItem}
+					/>
+				</View>
 				<View style={styles.listContainer}>
 					<FlatList
 						data={list}
+						keyExtractor={(item) => item.id}
 						renderItem={({ item }) => (
 							<ListItem item={item} onDeleteItem={onDeleteItem} />
 						)}
-						keyExtractor={(item) => item.id}
 					/>
 				</View>
 			</View>
@@ -92,7 +78,7 @@ export default function App() {
 					underlayColor="#DDDDDD"
 					onPress={() => setIsModalVisible(true)}
 				>
-					<Text style={styles.deleteAllButtonText}>Limpiar</Text>
+					<Text style={styles.deleteAllButtonText}>Vaciar</Text>
 				</TouchableHighlight>
 			</View>
 		</View>
@@ -102,31 +88,39 @@ export default function App() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		alignItems: "stretch",
-		justifyContent: "space-between",
 	},
 	header: {
-		flex: 0.2,
+		flex: 2,
 		alignItems: "center",
 		justifyContent: "center",
 		backgroundColor: "#97d000",
-		paddingTop: 10,
-		paddingBottom: 10,
-		width: "100%",
+		paddingTop: 20,
+
 	},
 	headerText: {
 		fontSize: 36,
 	},
 	body: {
-		flex: 0.85,
+		flex: 7,
 		justifyContent: "flex-start",
 		alignContent: "center",
 	},
-	inputButton: {},
-	listContainer: {
-		marginTop: 15,
+	addContainer: {
+		flex: 1,
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+		marginTop: 10,
+		marginBottom: 10,
 		marginLeft: 15,
 		marginRight: 15,
+	},
+	listContainer: {
+		flex:5,
+		// marginTop: 15,
+		marginLeft: 15,
+		marginRight: 15,
+		// paddingBottom: 20,
 	},
 	deleteAllButton: {
 		backgroundColor: "#ffcc00",
@@ -137,10 +131,10 @@ const styles = StyleSheet.create({
 		borderRadius: 25,
 	},
 	deleteAllButtonText: {
-		fontSize: 20,
+		fontSize: 18,
 	},
 	footer: {
-		flex: 0.15,
+		flex: 1,
 		justifyContent: "center",
 		backgroundColor: "#97d000",
 		alignItems: "center",
